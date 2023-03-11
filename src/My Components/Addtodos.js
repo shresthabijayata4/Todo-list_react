@@ -1,21 +1,30 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
-const Addtodos = () => {
+const Addtodos = (props) => {
+    const [title, setTitle] = useState("");
+    const [desc, setdesc] = useState("");
+    const submit = (e) => {
+        e.preventDefault();
+        if (!title || !desc) {
+            alert("Title or description cannot be blank")
+        }
+        props.addTodos(title, desc)
+    }
     return (
-        <div>
+        <div className='container'>
             <h3>Add a Todo</h3>
-            < Form >
-                <Form.Group className="mb-3" controlId="formBasicEmail">
+            < Form onSubmit={submit} >
+                <Form.Group className="mb-3" >
                     <Form.Label>Todo Title</Form.Label>
-                    <Form.Control type="email" placeholder="Enter email" />
+                    <Form.Control type="text" value={title} onChange={(e) => { setTitle(e.target.value) }} />
 
                 </Form.Group>
 
-                <Form.Group className="mb-3" controlId="formBasicPassword">
+                <Form.Group className="mb-3" >
                     <Form.Label>Todo description</Form.Label>
-                    <Form.Control type="password" placeholder="Password" />
+                    <Form.Control type="text" value={desc} onChange={(e) => { setdesc(e.target.value) }} />
                 </Form.Group>
                 {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
                     <Form.Check type="checkbox" label="Check me out" />
